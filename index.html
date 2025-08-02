@@ -3,98 +3,149 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>xxx 브랜드</title>
+  <title>to yellow hands to box</title>
   <style>
     body {
       margin: 0;
       background: #fff;
-      font-family: 'Noto Sans KR', sans-serif;
+      font-family: 'Noto Sans KR', sans-serif, sans-serif;
+      color: #000;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
       min-height: 100vh;
-      color: #000;
+      padding: 40px 20px 60px;
+      box-sizing: border-box;
     }
-    .container {
-      margin-top: 60px;
-      text-align: center;
-      width: 100%;
-      max-width: 600px;
-    }
-    .coming-soon {
-      font-size: 2.2rem;
-      font-weight: 700;
-      margin-bottom: 40px;
-      letter-spacing: 0.1em;
+
+    /* 브랜드명 강조 */
+    .brand-name {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: 0.15em;
+      margin-bottom: 50px;
       user-select: none;
+      text-align: center;
     }
+
+    /* 이미지 가로배열 컨테이너 */
     .images {
       display: flex;
-      flex-direction: column;
       gap: 20px;
-      margin-bottom: 60px;
-    }
-    .images img {
       width: 100%;
-      max-width: 600px;
-      height: 400px; /* 고정 높이로 동일 크기 */
-      object-fit: cover; /* 크기 딱 맞게 잘림 없이 채움 */
-      border-radius: 4px;
-      cursor: pointer;
-      transition: transform 0.2s ease;
+      max-width: 900px;
+      justify-content: center;
+      flex-wrap: nowrap; /* 모바일에서 스크롤 가능 */
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
+
+    /* 개별 이미지 */
+    .images img {
+      flex: 0 0 auto;
+      width: 280px;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: transform 0.25s ease;
+      user-select: none;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+
     .images img:hover {
-      transform: scale(1.03);
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255, 255, 0, 0.7);
     }
 
     /* 모달 스타일 */
     .modal {
-      display: none; /* 기본 숨김 */
+      display: none;
       position: fixed;
-      z-index: 1000;
-      left: 0; top: 0;
+      top: 0; left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0, 0, 0, 0.85);
       align-items: center;
       justify-content: center;
+      z-index: 1000;
+      flex-direction: column;
+      padding: 20px;
+      box-sizing: border-box;
     }
+
     .modal.active {
       display: flex;
     }
+
     .modal img {
       max-width: 80vw;
-      max-height: 80vh;
-      border-radius: 8px;
-      box-shadow: 0 0 20px rgba(255, 255, 0, 0.8);
+      max-height: 70vh;
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(255, 255, 0, 0.9);
+      margin-bottom: 20px;
+      user-select: none;
     }
+
+    .modal-text {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ffeb3b;
+      letter-spacing: 0.1em;
+      user-select: none;
+      text-shadow: 0 0 8px rgba(0,0,0,0.7);
+    }
+
     .modal-close {
       position: absolute;
       top: 20px;
       right: 30px;
-      font-size: 2rem;
+      font-size: 2.8rem;
+      font-weight: 900;
       color: #ffeb3b;
       cursor: pointer;
       user-select: none;
-      font-weight: 700;
+      transition: color 0.3s ease;
+    }
+
+    .modal-close:hover {
+      color: #fff176;
+    }
+
+    /* 모바일 대응: 이미지 크기 약간 축소 */
+    @media (max-width: 480px) {
+      .brand-name {
+        font-size: 2rem;
+        margin-bottom: 30px;
+      }
+      .images img {
+        width: 200px;
+        height: 280px;
+      }
+      .modal img {
+        max-height: 50vh;
+      }
+      .modal-text {
+        font-size: 1.6rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="coming-soon">COMING OUT SOON</div>
-    <div class="images">
-      <img src="img1.jpg" alt="Image 1" data-yellow="yellowhands1.png" />
-      <img src="img2.jpg" alt="Image 2" data-yellow="yellowhands2.png" />
-      <img src="img3.jpg" alt="Image 3" data-yellow="yellowhands3.png" />
-    </div>
+
+  <div class="brand-name">to yellow hands to box</div>
+
+  <div class="images">
+    <img src="look1.webp" alt="Look 1" data-modal="look4.webp" />
+    <img src="look2.webp" alt="Look 2" data-modal="look4.webp" />
+    <img src="look3.webp" alt="Look 3" data-modal="look4.webp" />
   </div>
 
-  <!-- 모달 팝업 -->
-  <div id="modal" class="modal">
-    <span id="modal-close" class="modal-close">&times;</span>
-    <img id="modal-img" src="" alt="Yellow Hands" />
+  <!-- 모달 -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-text">
+    <span id="modal-close" class="modal-close" aria-label="Close modal">&times;</span>
+    <img id="modal-img" src="" alt="Hold My Hand Image" />
+    <div id="modal-text" class="modal-text">Hold My Hand</div>
   </div>
 
   <script>
@@ -104,8 +155,8 @@
 
     document.querySelectorAll('.images img').forEach(img => {
       img.addEventListener('click', () => {
-        const yellowSrc = img.getAttribute('data-yellow');
-        modalImg.src = yellowSrc;
+        const modalSrc = img.getAttribute('data-modal');
+        modalImg.src = modalSrc;
         modal.classList.add('active');
       });
     });
@@ -115,7 +166,6 @@
       modalImg.src = '';
     });
 
-    // 모달 바깥 클릭해도 닫기
     modal.addEventListener('click', e => {
       if (e.target === modal) {
         modal.classList.remove('active');
@@ -123,5 +173,6 @@
       }
     });
   </script>
+
 </body>
 </html>
