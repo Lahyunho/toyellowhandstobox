@@ -8,7 +8,7 @@
     body {
       margin: 0;
       background: #fff;
-      font-family: 'Noto Sans KR', sans-serif, sans-serif;
+      font-family: 'Noto Sans KR', sans-serif;
       color: #000;
       display: flex;
       flex-direction: column;
@@ -17,30 +17,33 @@
       padding: 40px 20px 60px;
       box-sizing: border-box;
     }
-
-    /* 브랜드명 강조 */
     .brand-name {
-      font-size: 2.8rem;
+      font-size: 3rem;
       font-weight: 900;
-      letter-spacing: 0.15em;
-      margin-bottom: 50px;
+      letter-spacing: 0.2em;
       user-select: none;
       text-align: center;
+      margin-bottom: 10px;
     }
-
-    /* 이미지 가로배열 컨테이너 */
+    .coming-soon {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #555;
+      user-select: none;
+      margin-bottom: 50px;
+      text-align: center;
+    }
     .images {
       display: flex;
       gap: 20px;
       width: 100%;
       max-width: 900px;
       justify-content: center;
-      flex-wrap: nowrap; /* 모바일에서 스크롤 가능 */
+      flex-wrap: nowrap;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
     }
-
-    /* 개별 이미지 */
     .images img {
       flex: 0 0 auto;
       width: 280px;
@@ -52,13 +55,10 @@
       user-select: none;
       box-shadow: 0 0 8px rgba(0,0,0,0.1);
     }
-
     .images img:hover {
       transform: scale(1.05);
       box-shadow: 0 0 15px rgba(255, 255, 0, 0.7);
     }
-
-    /* 모달 스타일 */
     .modal {
       display: none;
       position: fixed;
@@ -73,11 +73,9 @@
       padding: 20px;
       box-sizing: border-box;
     }
-
     .modal.active {
       display: flex;
     }
-
     .modal img {
       max-width: 80vw;
       max-height: 70vh;
@@ -86,7 +84,6 @@
       margin-bottom: 20px;
       user-select: none;
     }
-
     .modal-text {
       font-size: 2rem;
       font-weight: 700;
@@ -95,7 +92,6 @@
       user-select: none;
       text-shadow: 0 0 8px rgba(0,0,0,0.7);
     }
-
     .modal-close {
       position: absolute;
       top: 20px;
@@ -107,15 +103,16 @@
       user-select: none;
       transition: color 0.3s ease;
     }
-
     .modal-close:hover {
       color: #fff176;
     }
-
-    /* 모바일 대응: 이미지 크기 약간 축소 */
     @media (max-width: 480px) {
       .brand-name {
-        font-size: 2rem;
+        font-size: 2.2rem;
+        margin-bottom: 8px;
+      }
+      .coming-soon {
+        font-size: 1.6rem;
         margin-bottom: 30px;
       }
       .images img {
@@ -134,6 +131,7 @@
 <body>
 
   <div class="brand-name">to yellow hands to box</div>
+  <div class="coming-soon">COMING OUT SOON</div>
 
   <div class="images">
     <img src="look1.webp" alt="Look 1" data-modal="look4.webp" />
@@ -141,7 +139,6 @@
     <img src="look3.webp" alt="Look 3" data-modal="look4.webp" />
   </div>
 
-  <!-- 모달 -->
   <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-text">
     <span id="modal-close" class="modal-close" aria-label="Close modal">&times;</span>
     <img id="modal-img" src="" alt="Hold My Hand Image" />
@@ -151,28 +148,4 @@
   <script>
     const modal = document.getElementById('modal');
     const modalImg = document.getElementById('modal-img');
-    const modalClose = document.getElementById('modal-close');
-
-    document.querySelectorAll('.images img').forEach(img => {
-      img.addEventListener('click', () => {
-        const modalSrc = img.getAttribute('data-modal');
-        modalImg.src = modalSrc;
-        modal.classList.add('active');
-      });
-    });
-
-    modalClose.addEventListener('click', () => {
-      modal.classList.remove('active');
-      modalImg.src = '';
-    });
-
-    modal.addEventListener('click', e => {
-      if (e.target === modal) {
-        modal.classList.remove('active');
-        modalImg.src = '';
-      }
-    });
-  </script>
-
-</body>
-</html>
+    const modalClose = docum
