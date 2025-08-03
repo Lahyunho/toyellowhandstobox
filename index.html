@@ -5,57 +5,121 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>to yellow hands to box</title>
   <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      margin: 0;
-      background: #fff;
       font-family: 'Noto Sans KR', sans-serif;
+      background: #fff;
       color: #000;
+      overflow: hidden;
+    }
+
+    /* 인트로 */
+    .intro {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100vh;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 9999;
+    }
+    .intro img {
+      width: 200px;
+      height: auto;
+      margin-bottom: 30px;
+      opacity: 0;
+      animation: fadeInOut 8s linear infinite;
+    }
+    @keyframes fadeInOut {
+      0%, 20% { opacity: 0; }
+      25%, 45% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+
+    .intro h1 {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #ffeb3b;
+      letter-spacing: 0.2em;
+      opacity: 0;
+      animation: textFadeIn 2s ease-out 1s forwards;
+    }
+
+    .intro p {
+      font-size: 1rem;
+      color: #ccc;
+      margin-top: 10px;
+      opacity: 0;
+      animation: textFadeIn 2s ease-out 2s forwards;
+    }
+
+    .enter-button {
+      margin-top: 30px;
+      padding: 10px 24px;
+      font-weight: bold;
+      background: #ffeb3b;
+      border: none;
+      cursor: pointer;
+      opacity: 0;
+      animation: textFadeIn 1.5s ease-out 3.2s forwards;
+    }
+
+    @keyframes textFadeIn {
+      to { opacity: 1; }
+    }
+
+    .main {
+      display: none;
+      padding: 40px 20px 60px;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh;
-      padding: 40px 20px 60px;
-      box-sizing: border-box;
     }
+
     .title {
       font-size: 2.8rem;
       font-weight: 900;
       letter-spacing: 0.15em;
-      user-select: none;
       text-align: center;
       margin-bottom: 50px;
-      color: #000;
     }
-    .divider {
-      margin: 0 15px;
-      color: #ffeb3b;
-      font-weight: 900;
+
+    .title .sub {
+      font-weight: 400;
+      color: #999;
+      font-size: 1.2rem;
+      margin-top: 10px;
+      display: block;
     }
+
     .images {
       display: flex;
       gap: 20px;
-      width: 100%;
       max-width: 900px;
-      justify-content: center;
-      flex-wrap: nowrap;
       overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
+      justify-content: center;
     }
+
     .images img {
-      flex: 0 0 auto;
       width: 280px;
       height: 400px;
       object-fit: cover;
       border-radius: 6px;
       cursor: pointer;
       transition: transform 0.25s ease;
-      user-select: none;
       box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      flex: 0 0 auto;
     }
+
     .images img:hover {
       transform: scale(1.05);
       box-shadow: 0 0 15px rgba(255, 255, 0, 0.7);
     }
+
     .modal {
       display: none;
       position: fixed;
@@ -68,41 +132,35 @@
       z-index: 1000;
       flex-direction: column;
       padding: 20px;
-      box-sizing: border-box;
     }
+
     .modal.active {
       display: flex;
     }
+
     .modal img {
       max-width: 80vw;
       max-height: 70vh;
       border-radius: 10px;
       box-shadow: 0 0 30px rgba(255, 255, 0, 0.9);
       margin-bottom: 20px;
-      user-select: none;
     }
+
     .modal-text {
       font-size: 2rem;
       font-weight: 700;
       color: #ffeb3b;
-      letter-spacing: 0.1em;
-      user-select: none;
-      text-shadow: 0 0 8px rgba(0,0,0,0.7);
     }
+
     .modal-close {
       position: absolute;
       top: 20px;
       right: 30px;
       font-size: 2.8rem;
-      font-weight: 900;
       color: #ffeb3b;
       cursor: pointer;
-      user-select: none;
-      transition: color 0.3s ease;
     }
-    .modal-close:hover {
-      color: #fff176;
-    }
+
     @media (max-width: 480px) {
       .title {
         font-size: 2rem;
@@ -123,23 +181,53 @@
 </head>
 <body>
 
-  <div class="title">
-    to yellow hands to box <span class="divider">|</span> COMING OUT SOON
+  <!-- 인트로 -->
+  <div class="intro" id="intro">
+    <img id="introImage" src="look5.webp" alt="intro image" />
+    <h1>to yellow hands to box</h1>
+    <p>COMING OUT SOON</p>
+    <button class="enter-button" onclick="enterSite()">ENTER</button>
   </div>
 
-  <div class="images">
-    <img src="look1.webp.webp" alt="Look 1" data-modal="look4.webp.webp" />
-    <img src="look2.webp.webp" alt="Look 2" data-modal="look4.webp.webp" />
-    <img src="look3.webp.webp" alt="Look 3" data-modal="look4.webp.webp" />
+  <!-- 메인 콘텐츠 -->
+  <div class="main" id="main">
+    <div class="title">
+      to yellow hands to box
+      <span class="sub">COMING OUT SOON</span>
+    </div>
+
+    <div class="images">
+      <img src="look1.webp.webp" alt="Look 1" data-modal="look4.webp.webp" />
+      <img src="look2.webp.webp" alt="Look 2" data-modal="look4.webp.webp" />
+      <img src="look3.webp.webp" alt="Look 3" data-modal="look4.webp.webp" />
+    </div>
   </div>
 
-  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-text">
-    <span id="modal-close" class="modal-close" aria-label="Close modal">&times;</span>
-    <img id="modal-img" src="" alt="Hold My Hand Image" />
+  <!-- 모달 -->
+  <div id="modal" class="modal">
+    <span id="modal-close" class="modal-close">&times;</span>
+    <img id="modal-img" src="" alt="modal image" />
     <div id="modal-text" class="modal-text">Hold My Hand</div>
   </div>
 
   <script>
+    // 인트로 이미지 순환
+    const introImages = ["look5.webp", "look6.webp", "look7.webp", "look8.webp"];
+    let current = 0;
+    const img = document.getElementById("introImage");
+    setInterval(() => {
+      current = (current + 1) % introImages.length;
+      img.src = introImages[current];
+    }, 2000);
+
+    // 본문으로 진입
+    function enterSite() {
+      document.getElementById('intro').style.display = 'none';
+      document.getElementById('main').style.display = 'flex';
+      document.body.style.overflow = 'auto';
+    }
+
+    // 모달
     const modal = document.getElementById('modal');
     const modalImg = document.getElementById('modal-img');
     const modalClose = document.getElementById('modal-close');
@@ -164,6 +252,5 @@
       }
     });
   </script>
-
 </body>
 </html>
