@@ -2,106 +2,102 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>to yellow hands to box</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
     body {
       font-family: 'Noto Sans KR', sans-serif;
-      background: #fff;
+      background-color: #fff;
       color: #000;
       overflow: hidden;
     }
 
-    /* 인트로 */
     .intro {
       position: fixed;
       top: 0; left: 0;
-      width: 100%;
-      height: 100vh;
-      background: #000;
+      width: 100vw; height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       flex-direction: column;
+      background-color: #000;
       z-index: 9999;
     }
-    .intro img {
-      width: 200px;
-      height: auto;
-      margin-bottom: 30px;
+
+    .intro-images {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      overflow: hidden;
+    }
+
+    .intro-images img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       opacity: 0;
-      animation: fadeInOut 8s linear infinite;
-    }
-    @keyframes fadeInOut {
-      0%, 20% { opacity: 0; }
-      25%, 45% { opacity: 1; }
-      50%, 100% { opacity: 0; }
+      transition: opacity 1s ease-in-out;
     }
 
-    .intro h1 {
-      font-size: 2rem;
-      font-weight: 900;
-      color: #ffeb3b;
-      letter-spacing: 0.2em;
-      opacity: 0;
-      animation: textFadeIn 2s ease-out 1s forwards;
+    .intro-images img.active {
+      opacity: 1;
     }
 
-    .intro p {
-      font-size: 1rem;
-      color: #ccc;
-      margin-top: 10px;
-      opacity: 0;
-      animation: textFadeIn 2s ease-out 2s forwards;
+    .intro-text {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      color: white;
     }
 
-    .enter-button {
-      margin-top: 30px;
-      padding: 10px 24px;
-      font-weight: bold;
-      background: #ffeb3b;
-      border: none;
-      cursor: pointer;
-      opacity: 0;
-      animation: textFadeIn 1.5s ease-out 3.2s forwards;
-    }
-
-    @keyframes textFadeIn {
-      to { opacity: 1; }
-    }
-
-    .main {
-      display: none;
-      padding: 40px 20px 60px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .title {
-      font-size: 2.8rem;
+    .brand-name {
+      font-size: 3rem;
       font-weight: 900;
       letter-spacing: 0.15em;
-      text-align: center;
-      margin-bottom: 50px;
     }
 
-    .title .sub {
-      font-weight: 400;
-      color: #999;
-      font-size: 1.2rem;
-      margin-top: 10px;
-      display: block;
+    .coming-soon {
+      font-size: 1.3rem;
+      margin-top: 1rem;
+      opacity: 0.7;
+      letter-spacing: 0.1em;
+    }
+
+    .enter-btn {
+      margin-top: 2.5rem;
+      padding: 12px 30px;
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      background-color: #ffeb3b;
+      color: #000;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      z-index: 10;
+    }
+
+    .enter-btn:hover {
+      background-color: #fff176;
+    }
+
+    .main-content {
+      display: none;
+      padding: 40px 20px;
+      text-align: center;
     }
 
     .images {
       display: flex;
-      gap: 20px;
-      max-width: 900px;
-      overflow-x: auto;
       justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 30px;
     }
 
     .images img {
@@ -109,148 +105,59 @@
       height: 400px;
       object-fit: cover;
       border-radius: 6px;
-      cursor: pointer;
-      transition: transform 0.25s ease;
       box-shadow: 0 0 8px rgba(0,0,0,0.1);
-      flex: 0 0 auto;
+      transition: transform 0.25s ease;
+      cursor: pointer;
     }
 
     .images img:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(255, 255, 0, 0.7);
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.85);
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      flex-direction: column;
-      padding: 20px;
-    }
-
-    .modal.active {
-      display: flex;
-    }
-
-    .modal img {
-      max-width: 80vw;
-      max-height: 70vh;
-      border-radius: 10px;
-      box-shadow: 0 0 30px rgba(255, 255, 0, 0.9);
-      margin-bottom: 20px;
-    }
-
-    .modal-text {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #ffeb3b;
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 2.8rem;
-      color: #ffeb3b;
-      cursor: pointer;
-    }
-
-    @media (max-width: 480px) {
-      .title {
-        font-size: 2rem;
-        margin-bottom: 30px;
-      }
-      .images img {
-        width: 200px;
-        height: 280px;
-      }
-      .modal img {
-        max-height: 50vh;
-      }
-      .modal-text {
-        font-size: 1.6rem;
-      }
+      box-shadow: 0 0 15px rgba(255, 255, 0, 0.6);
     }
   </style>
 </head>
 <body>
 
-  <!-- 인트로 -->
-  <div class="intro" id="intro">
-    <img id="introImage" src="look5.webp" alt="intro image" />
+  <!-- Intro -->
+  <div class="intro">
+    <div class="intro-images">
+      <img src="look5.webp" class="active" />
+      <img src="look6.webp" />
+      <img src="look7.webp" />
+      <img src="look8.webp" />
+    </div>
+    <div class="intro-text">
+      <div class="brand-name">to yellow hands to box</div>
+      <div class="coming-soon">COMING OUT SOON</div>
+      <button class="enter-btn">Enter</button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
     <h1>to yellow hands to box</h1>
-    <p>COMING OUT SOON</p>
-    <button class="enter-button" onclick="enterSite()">ENTER</button>
-  </div>
-
-  <!-- 메인 콘텐츠 -->
-  <div class="main" id="main">
-    <div class="title">
-      to yellow hands to box
-      <span class="sub">COMING OUT SOON</span>
-    </div>
-
     <div class="images">
-      <img src="look1.webp.webp" alt="Look 1" data-modal="look4.webp.webp" />
-      <img src="look2.webp.webp" alt="Look 2" data-modal="look4.webp.webp" />
-      <img src="look3.webp.webp" alt="Look 3" data-modal="look4.webp.webp" />
+      <img src="look1.webp.webp" alt="Look 1">
+      <img src="look2.webp.webp" alt="Look 2">
+      <img src="look3.webp.webp" alt="Look 3">
     </div>
-  </div>
-
-  <!-- 모달 -->
-  <div id="modal" class="modal">
-    <span id="modal-close" class="modal-close">&times;</span>
-    <img id="modal-img" src="" alt="modal image" />
-    <div id="modal-text" class="modal-text">Hold My Hand</div>
   </div>
 
   <script>
-    // 인트로 이미지 순환
-    const introImages = ["look5.webp", "look6.webp", "look7.webp", "look8.webp"];
+    const images = document.querySelectorAll('.intro-images img');
     let current = 0;
-    const img = document.getElementById("introImage");
+
     setInterval(() => {
-      current = (current + 1) % introImages.length;
-      img.src = introImages[current];
-    }, 2000);
+      images[current].classList.remove('active');
+      current = (current + 1) % images.length;
+      images[current].classList.add('active');
+    }, 2500);
 
-    // 본문으로 진입
-    function enterSite() {
-      document.getElementById('intro').style.display = 'none';
-      document.getElementById('main').style.display = 'flex';
-      document.body.style.overflow = 'auto';
-    }
-
-    // 모달
-    const modal = document.getElementById('modal');
-    const modalImg = document.getElementById('modal-img');
-    const modalClose = document.getElementById('modal-close');
-
-    document.querySelectorAll('.images img').forEach(img => {
-      img.addEventListener('click', () => {
-        const modalSrc = img.getAttribute('data-modal');
-        modalImg.src = modalSrc;
-        modal.classList.add('active');
-      });
-    });
-
-    modalClose.addEventListener('click', () => {
-      modal.classList.remove('active');
-      modalImg.src = '';
-    });
-
-    modal.addEventListener('click', e => {
-      if (e.target === modal) {
-        modal.classList.remove('active');
-        modalImg.src = '';
-      }
+    document.querySelector('.enter-btn').addEventListener('click', () => {
+      document.querySelector('.intro').style.display = 'none';
+      document.querySelector('.main-content').style.display = 'block';
     });
   </script>
+
 </body>
 </html>
